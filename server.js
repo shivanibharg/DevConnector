@@ -1,17 +1,17 @@
 //This file can also be called index.js
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const app = express();
-var bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
 
 const db = require('./config/keys').mongoURI;
-
 const users = require('./routes/api/users');
 const posts = require('./routes/api/posts');
 const profile = require('./routes/api/profile');
+
+//Body parser middleware
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 //Connect to db
 mongoose
