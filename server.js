@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const app = express();
 
 const db = require('./config/keys').mongoURI;
@@ -19,12 +20,17 @@ mongoose
   .then(()=>console.log('MongoDB connected'))
   .catch(err=> console.log(err));
 
+//passport middleware
+app.use(passport.initialize());
+//passport config
+require('./config/passport')(passport);
+
 //Let's write our first route
-app.get('/', (req, res) => res.send('Hello World from the other side!'));
+app.get('/', (req, res) => res.send('Hello from the other side!'));
 
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
 
-const port = process.env.PORT || 5400;
+const port = process.env.PORT || 6300;
 app.listen(port, ()=> console.log(`Server running on port ${port}`));
